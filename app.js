@@ -3,9 +3,11 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-// var bcrypt = require('bcrypt');
-var bcrypt = require('bcryptjs');
+
+var bcrypt = require('bcrypt');
+//var bcrypt = require('bcryptjs');
 // const MongoClient = require('mongodb').MongoClient
 // var ObjectId = require('mongodb').ObjectId;
 // const url = "mongodb://localhost:27017"
@@ -17,6 +19,7 @@ var loginRouter = require('./routes/login');
 var usersRouter = require('./routes/users');
 var ingresoRouter = require('./routes/ingreso');
 var egresoRouter = require('./routes/egreso')
+var indexRouter = require('./routes/index')
 var socketRouter = require('./routes/socket')
 
 //Middleware
@@ -73,7 +76,7 @@ app.use(cookieParser());
 
 
 
-
+app.use(indexRouter);
 app.use(corsMW);
 app.use(auditoriaMW);
 app.use('/users', usersRouter);

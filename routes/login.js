@@ -5,8 +5,8 @@ const jwt = require('jsonwebtoken');
 
 let  loginModule = require('../module/loginModule').moduleLogin;
 
-// var bcrypt = require('bcrypt');
-var bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
+//var bcrypt = require('bcryptjs');
 
 router.post('/', (req, res) => {
 

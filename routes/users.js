@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 
 
-// var bcrypt = require('bcrypt');
-var bcrypt = require('bcryptjs');
+var bcrypt = require('bcrypt');
+//var bcrypt = require('bcryptjs');
 
 
 let mongoose = require('./../dbHelper/dbHelper');
