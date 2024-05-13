@@ -6,7 +6,7 @@ let Auditoria = require('../model/auditoriaDto');
 
 const config = require('../configs/config');
 const jwt = require('jsonwebtoken');
-
+const EXCLUDE_AUDIT = ["/favicon", "/swagger"];
 router.use((req,res,next)=>{
   const token = req.headers['token'];
   let decodeToken;
@@ -17,19 +17,20 @@ router.use((req,res,next)=>{
       }
     });
   }
+  if(!req.originalUrl.includes('favicon') && !req.originalUrl.includes('swagger')){
+    let aud = new Auditoria({
+       ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress,
+       ruta: req.originalUrl,
+       metodo: req.method,
+       usuario: decodeToken
+   });
+   
+   aud.save(function(err) {
+     if (err) throw err;
+     console.log('se guardo la auditoria');
+   });
+  }
 
-   let aud = new Auditoria({
-      ip: req.headers['x-forwarded-for'] || req.connection.remoteAddress,
-      ruta: req.originalUrl,
-      metodo: req.method,
-      usuario: decodeToken
-  });
-  
-  aud.save(function(err) {
-    if (err) throw err;
-    console.log('se guardo la auditoria');
-  });
-    
 
   next();
 });
